@@ -12,7 +12,7 @@
       @load="onLoad"
     >
       <div class="list-box">
-        <div class="list-item" v-for="(item, ing) of imgList" :key="ing">
+        <div class="list-item" v-for="(item, ing) of dataList" :key="ing">
           <van-image :src="item.imgUrl" fit="cover" lazy-load />
           <p class="content">
             {{ item.text }}
@@ -55,57 +55,97 @@ import img022 from '@/assets/images/img022.jpg'
 import img023 from '@/assets/images/img023.jpg'
 import img024 from '@/assets/images/img024.jpg'
 
+type ItemType = {
+  imgUrl: typeof img001
+  text: string
+  author: {
+    name: string
+    avatar: typeof img001
+  }
+}
+
 const loading = ref(false)
 const finished = ref(false)
-const imgList = ref([
+const dataList = ref<ItemType[]>([])
+const imgList = [
   {
     imgUrl: img001,
-    text: '城市天际线1号城市天际线1号城市天际线1号城市',
-    author: { name: 'author 111', avatar: img002 },
+    text: '不争不抢 不失不忘',
+    author: { name: '夜微凉', avatar: img002 },
   },
   {
     imgUrl: img003,
-    text: '城市天际线2号',
-    author: { name: 'author 2', avatar: img004 },
+    text: '经受我这一生的风霜',
+    author: { name: '万物', avatar: img004 },
   },
   {
     imgUrl: img005,
-    text: '城市天际线3号',
-    author: { name: 'author 333', avatar: img006 },
+    text: '满目皆悲伤 只有你的眉上扬 等你对饮一碗夜光',
+    author: { name: '我拒绝', avatar: img006 },
   },
   {
     imgUrl: img007,
-    text: '城市天际线1号城市天际线1号城市天际线1号城市',
-    author: { name: 'author 111', avatar: img008 },
+    text: '你不来 再美的天地都狼藉',
+    author: { name: '闫天午', avatar: img008 },
   },
   {
     imgUrl: img009,
-    text: '城市天际线2号',
-    author: { name: 'author 2', avatar: img010 },
+    text: '你不在再好的风景皆无力',
+    author: { name: 'Soundhub Studios', avatar: img010 },
   },
   {
     imgUrl: img011,
-    text: '城市天际线3号',
-    author: { name: 'author 333', avatar: img012 },
+    text: '万物皆无光 只有你的眼明亮',
+    author: { name: 'LIVE STUDIO', avatar: img012 },
   },
-])
+  {
+    imgUrl: img013,
+    text: '济南将迎大雨到暴雨',
+    author: { name: '抹茶麻薯', avatar: img014 },
+  },
+  {
+    imgUrl: img015,
+    text: '开始汹涌来袭 后来绝尘而去 你不来 再美的天地都狼藉',
+    author: { name: '国际首席爱乐乐团', avatar: img016 },
+  },
+  {
+    imgUrl: img017,
+    text: '来时携风雨 去时带走了四季',
+    author: { name: '只剩下空荡', avatar: img018 },
+  },
+  {
+    imgUrl: img019,
+    text: '随心去远方看看太阳',
+    author: { name: '索尼音乐', avatar: img020 },
+  },
+  {
+    imgUrl: img021,
+    text: '背负我这一身的流光 不乱不慌 不悲不伤',
+    author: { name: '时俊峰', avatar: img022 },
+  },
+  {
+    imgUrl: img023,
+    text: '尽染洪荒 没有你的目光',
+    author: { name: 'FUTURE', avatar: img024 },
+  },
+]
 
 const onLoad = () => {
   // 异步更新数据
   // setTimeout 仅做示例，真实场景中一般为 ajax 请求
   setTimeout(() => {
     for (let i = 0; i < 10; i++) {
-      var listBox = imgList.value[0]
-      imgList.value.push(listBox)
+      const listBox = imgList[Math.floor(Math.random() * imgList.length)]
+      dataList.value.push(listBox)
     }
 
     // 加载状态结束
     loading.value = false
     // 数据全部加载完成
-    if (imgList.value.length >= 40) {
+    if (dataList.value.length >= 20) {
       finished.value = true
     }
-  }, 1000)
+  }, 500)
 }
 </script>
 <style lang="less" scoped>
