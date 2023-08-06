@@ -1,10 +1,16 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 const Home = () => import('@/components/Home.vue')
 const Demo = () => import('@/components/Demo.vue')
+const Detail = () => import('@/components/Detail.vue')
 
 const routes = [
-  { path: '/', component: Home },
-  { path: '/demo', component: Demo },
+  { path: '/', component: Demo },
+  { path: '/demo', component: Home },
+  {
+    path: '/detail',
+    component: Detail,
+    props: route => ({ id: route.query.id }),
+  },
 ]
 
 // 3. 创建路由实例并传递 `routes` 配置

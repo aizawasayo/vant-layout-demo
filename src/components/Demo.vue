@@ -1,35 +1,6 @@
-<template>
-  <div class="list-demo">
-    <van-nav-bar title="标题" left-arrow fixed>
-      <template #right>
-        <van-icon name="search" size="24" />
-      </template>
-    </van-nav-bar>
-    <van-list
-      v-model="loading"
-      :finished="finished"
-      finished-text="没有更多了"
-      @load="onLoad"
-    >
-      <div class="list-box">
-        <div class="list-item" v-for="(item, ing) of dataList" :key="ing">
-          <van-image :src="item.imgUrl" fit="cover" lazy-load />
-          <p class="content">
-            {{ item.text }}
-          </p>
-
-          <div class="author">
-            <van-image :src="item.author.avatar" round />
-            <span>{{ item.author.name }}</span>
-          </div>
-        </div>
-      </div>
-    </van-list>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import img001 from '@/assets/images/img001.jpg'
 import img002 from '@/assets/images/img002.jpg'
 import img003 from '@/assets/images/img003.jpg'
@@ -129,6 +100,10 @@ const imgList = [
     author: { name: 'FUTURE', avatar: img024 },
   },
 ]
+const router = useRouter()
+const goDetail = (id: string) => {
+  router.push('/detail?id=' + id)
+}
 
 const onLoad = () => {
   // 异步更新数据
@@ -148,10 +123,48 @@ const onLoad = () => {
   }, 500)
 }
 </script>
+
+<template>
+  <div class="main">
+    <div class="list-demo">
+      <van-nav-bar title="标题" fixed>
+        <template #right>
+          <van-icon name="search" size="24" />
+        </template>
+      </van-nav-bar>
+      <van-list
+        v-model="loading"
+        :finished="finished"
+        finished-text="没有更多了"
+        @load="onLoad"
+      >
+        <div class="list-box">
+          <div class="list-item" v-for="(item, ing) of dataList" :key="ing">
+            <van-image
+              :src="item.imgUrl"
+              fit="cover"
+              lazy-load
+              @click="goDetail(item.imgUrl)"
+            />
+            <p class="content">
+              {{ item.text }}
+            </p>
+
+            <div class="author">
+              <van-image :src="item.author.avatar" round />
+              <span>{{ item.author.name }}</span>
+            </div>
+          </div>
+        </div>
+      </van-list>
+    </div>
+  </div>
+</template>
+
 <style lang="less" scoped>
 .list-demo {
   background-color: #eff2f5;
-  padding: 56px 8px 16px;
+  padding: 8px;
 
   .list-box {
     column-count: 2;
@@ -206,8 +219,6 @@ const onLoad = () => {
 
 @media (min-width: 768px) {
   .list-demo {
-    padding: 32px 8px 16px;
-
     .list-box {
       column-count: 3;
       .list-item {
@@ -230,8 +241,6 @@ const onLoad = () => {
 
 @media (min-width: 1024px) {
   .list-demo {
-    padding: 32px 8px 16px;
-
     .list-box {
       column-count: 3;
 
